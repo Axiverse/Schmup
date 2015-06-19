@@ -6,7 +6,11 @@ class Entity
   PVector temp = new PVector();
   
   boolean alive = false;
+  boolean friendly = false;
   float radius = 10;
+  
+  ArrayList<Controller> controllers = new ArrayList<Controller>();
+  Weapon weapon = new Weapon();
   
   public Entity() {
     
@@ -14,12 +18,16 @@ class Entity
   
   public void draw() {
     ellipseMode(CENTER);
-    fill(100);
+    
+    if (friendly)
+      fill(0, 0, 255);
+    else
+      fill(255, 0, 0);
+    
     ellipse(position.x, position.y, radius, radius);
   }
   
   public void update(float delta) {
-    
     if (alive) {
        
        temp.set(acceleration);
@@ -32,6 +40,22 @@ class Entity
        
     }
     
+    for (Controller controller : controllers) {
+      controller.update(delta);
+    }
+    
   }
+  
+}
+
+class Projectile extends Entity {
+  
+}
+
+class Ship extends Entity {
+  
+}
+
+class PowerUp extends Entity {
   
 }
