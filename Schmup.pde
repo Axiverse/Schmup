@@ -1,9 +1,9 @@
 
 Game game = new Game();
-
+Player player;
 
 public void setup() {
-  size(400,300);
+  size(800,800);
   randomSeed(5);
   smooth();
 
@@ -12,22 +12,11 @@ public void setup() {
     game.entities.add(s);
   }
   
-  {
-    Ship s = new Ship();
-    s.alive = true;
-    s.friendly = true;
-    s.position.x = 100;
-    s.position.y = 50;
-    s.controllers.add(new KeyboardController(s));
-    game.entities.add(s);
-    game.friendlyShips.add(s);
-  }
+  player = new Player();
   
 }
 
 public void draw() {
-  background(255);
-  
   game.update();
   game.draw();
 

@@ -32,6 +32,7 @@ class CircleController extends Controller {
 
 class KeyboardController extends Controller implements KeyListener {
   boolean directions[] = new boolean[4];//L,U,R,D
+  float speed = 100;
   
   public KeyboardController(Entity entity) {
       super(entity);
@@ -43,25 +44,25 @@ class KeyboardController extends Controller implements KeyListener {
       case 37: /* left */
         if (!directions[0]) {
           directions[0] = true;
-          entity.velocity.x += -50;
+          entity.velocity.x += -speed;
         }
         break;
       case 38: /* up */
         if (!directions[1]) {
           directions[1] = true;
-          entity.velocity.y += -50;
+          entity.velocity.y += -speed;
         }
         break;
       case 39: /* right */
         if (!directions[2]) {
           directions[2] = true;
-          entity.velocity.x += 50;
+          entity.velocity.x += speed;
         }
         break;
       case 40: /* down */
         if (!directions[3]) {
           directions[3] = true;
-          entity.velocity.y += 50;
+          entity.velocity.y += speed;
         }
         break;
     }
@@ -75,39 +76,21 @@ class KeyboardController extends Controller implements KeyListener {
     switch (keyCode) {
       case 37: /* left */
         directions[0] = false;
-        entity.velocity.x -= -50;
+        entity.velocity.x -= -speed;
         break;
       case 38: /* up */
         directions[1] = false;
-        entity.velocity.y -= -50;
+        entity.velocity.y -= -speed;
         break;
       case 39: /* right */
         directions[2] = false;
-        entity.velocity.x -= 50;
+        entity.velocity.x -= speed;
         break;
       case 40: /* down */
         directions[3] = false;
-        entity.velocity.y -= 50;
+        entity.velocity.y -= speed;
         break;
     }
   }
 }
 
-interface KeyListener {
-  public void keyPressed(int keyCode);
-  public void keyReleased(int keyCode);
-}
-
-ArrayList<KeyListener> keyListeners = new ArrayList<KeyListener>();
-
-void keyPressed() {
-  for (KeyListener listener : keyListeners) {
-    listener.keyPressed(keyCode);
-  }
-}
-
-void keyReleased() {
-  for (KeyListener listener : keyListeners) {
-    listener.keyReleased(keyCode);
-  }
-}

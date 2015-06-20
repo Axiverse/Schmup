@@ -7,7 +7,7 @@ class Entity
   
   boolean alive = false;
   boolean friendly = false;
-  float radius = 10;
+  float radius = 5;
   
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   Weapon weapon = new Weapon();
@@ -24,7 +24,7 @@ class Entity
     else
       fill(255, 0, 0);
     
-    ellipse(position.x, position.y, radius, radius);
+    ellipse(position.x, position.y, radius * 2, radius * 2);
   }
   
   public void update(float delta) {
@@ -51,6 +51,9 @@ class Entity
     }
   }
   
+  public void onCollision(CollisionEvent event) {
+    
+  }
 }
 
 class Projectile extends Entity {
@@ -58,7 +61,13 @@ class Projectile extends Entity {
 }
 
 class Ship extends Entity {
+  CollisionListener collisionListener;
   
+  public void onCollision(CollisionEvent event) {
+    if (collisionListener != null) {
+      collisionListener.onCollision(event);
+    }
+  }
 }
 
 class PowerUp extends Entity {
@@ -77,7 +86,7 @@ class Emitter extends Entity {
       
       i++; 
       Ship s = new Ship();
-      s.position.x = 50 + 10 * i;
+      s.position.x = 200 + 10 * i;
       s.position.y = 50;
       CircleController c = new CircleController(s);
       c.center.set(s.position);

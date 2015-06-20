@@ -17,6 +17,20 @@ class Game
   }
   
   PVector temp = new PVector();
+  CollisionEvent collision = new CollisionEvent();
+  private Entity raiseCollision(Entity owner, Entity other) {
+    collision.entity = other;
+    collision.destroy = true;
+    
+    owner.onCollision(collision);
+    
+    if (collision.destroy) {
+      return owner;
+    }
+    
+    return null;
+  }
+  
   public void processCollisions() {
     Entity s = null;
     Entity p = null;
@@ -29,20 +43,22 @@ class Game
         temp.sub(projectile.position);
         if (temp.magSq() < (r * r)) {
           // they collide
-          pendingRemove.add(ship);
-          pendingRemove.add(projectile);
           
-          s = ship;
-          p = projectile;
+          s = raiseCollision(ship, projectile);
+          p = raiseCollision(projectile, ship);
           break friendly;
         }
       }
     }
     
-    if (s != null)
+    if (s != null) {
+      pendingRemove.add(s);
       friendlyShips.remove(s);
-    if (p != null)
-      enemyProjectiles.remove(s);
+    }
+    if (p != null) {
+      pendingRemove.add(p);
+      enemyProjectiles.remove(p);
+    }
     
     s = null;
     p = null;
@@ -55,20 +71,22 @@ class Game
         temp.sub(projectile.position);
         if (temp.magSq() < (r * r)) {
           // they collide
-          pendingRemove.add(ship);
-          pendingRemove.add(projectile);
           
-          s = ship;
-          p = projectile;
+          s = raiseCollision(ship, projectile);
+          p = raiseCollision(projectile, ship);
           break enemy;
         }
       }
     }
     
-    if (s != null)
+    if (s != null) {
+      pendingRemove.add(s);
       enemyShips.remove(s);
-    if (p != null)
-      friendlyProjectiles.remove(s);
+    }
+    if (p != null) {
+      pendingRemove.add(p);
+      friendlyProjectiles.remove(p);
+    }
   }
   
   public void update() {
@@ -90,10 +108,36 @@ class Game
   }
   
   public void draw() {
+    background(50);
+    
     for (Entity entity : entities) {
       entity.draw();
     }
+    
+    drawUi();
   }
   
   
+  PFont font = createFont("Eurostile", 16);
+  public void drawUi() {
+    fill(0);
+    noStroke();
+    
+    rect(0, 0, 150, 800);
+    
+    rect(650, 0, 150, 800);
+    
+    fill(255);
+    textFont(font);
+    textAlign(LEFT, TOP);
+    text("Lives", 10, 10);
+    text("3", 10, 30);
+    
+    
+    textAlign(RIGHT, TOP);
+    text("Score", width - 10, 10);
+    text("393993", width - 10, 30);
+  }
+  
 }
+
