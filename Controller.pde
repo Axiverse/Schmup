@@ -32,11 +32,21 @@ class CircleController extends Controller {
 
 class KeyboardController extends Controller implements KeyListener {
   boolean directions[] = new boolean[4];//L,U,R,D
+  boolean fire = false;
   float speed = 100;
   
   public KeyboardController(Entity entity) {
       super(entity);
       keyListeners.add(this);
+  }
+  
+  public void update(float delta) {
+    if (entity.weapon != null) {
+      if (fire)
+        entity.weapon.emit(entity, delta);
+      else 
+        entity.weapon.roll(delta);
+    }
   }
   
   public void keyPressed(int keyCode) {
@@ -68,7 +78,8 @@ class KeyboardController extends Controller implements KeyListener {
     }
     
     if (key == ' ') {
-      entity.weapon.emit(entity,100);
+      fire = true;
+      entity.weapon.emit(entity, 0);
     }
   }
   
@@ -90,6 +101,10 @@ class KeyboardController extends Controller implements KeyListener {
         directions[3] = false;
         entity.velocity.y -= speed;
         break;
+    }
+    
+    if (key == ' ') {
+      fire = false;
     }
   }
 }

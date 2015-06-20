@@ -2,6 +2,10 @@ class Weapon {
   float period = 1;
   float cooldown = 0;
   
+  public void roll(float delta) {
+    cooldown -= delta;
+  }
+  
   public Projectile emit(Entity e, float delta) {
     if ((cooldown -= delta) < 0) {
       cooldown = period;
@@ -20,6 +24,9 @@ class Weapon {
         game.friendlyProjectiles.add(projectile);
       else
         game.enemyProjectiles.add(projectile);
+      
+      if (projectile.friendly)
+        sound.play();
       return projectile;
     }
     

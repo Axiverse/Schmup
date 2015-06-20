@@ -108,7 +108,7 @@ class Game
   }
   
   public void draw() {
-    background(50);
+    background(20);
     
     for (Entity entity : entities) {
       entity.draw();

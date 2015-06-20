@@ -13,7 +13,6 @@ class CollisionEvent {
   }
 }
 
-
 interface CollisionListener {
   public void onCollision(CollisionEvent event);
 }
