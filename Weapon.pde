@@ -15,6 +15,11 @@ class Weapon {
       projectile.friendly = e.friendly;
       
       game.pendingAdd.add(projectile);
+      
+      if (projectile.friendly)
+        game.friendlyProjectiles.add(projectile);
+      else
+        game.enemyProjectiles.add(projectile);
       return projectile;
     }
     

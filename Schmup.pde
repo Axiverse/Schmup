@@ -8,10 +8,7 @@ public void setup() {
   smooth();
 
   {
-    Ship s = new Ship();
-    s.position.x = 50;
-    s.position.y = 50;
-    s.controllers.add(new CircleController(s));
+    Emitter s = new Emitter();
     game.entities.add(s);
   }
   
@@ -19,10 +16,11 @@ public void setup() {
     Ship s = new Ship();
     s.alive = true;
     s.friendly = true;
-    s.position.x = 50;
+    s.position.x = 100;
     s.position.y = 50;
     s.controllers.add(new KeyboardController(s));
     game.entities.add(s);
+    game.friendlyShips.add(s);
   }
   
 }

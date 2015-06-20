@@ -31,6 +31,8 @@ class CircleController extends Controller {
 }
 
 class KeyboardController extends Controller implements KeyListener {
+  boolean directions[] = new boolean[4];//L,U,R,D
+  
   public KeyboardController(Entity entity) {
       super(entity);
       keyListeners.add(this);
@@ -39,20 +41,28 @@ class KeyboardController extends Controller implements KeyListener {
   public void keyPressed(int keyCode) {
     switch (keyCode) {
       case 37: /* left */
-        entity.velocity.x = -30;
-        entity.velocity.y = 0;
+        if (!directions[0]) {
+          directions[0] = true;
+          entity.velocity.x += -50;
+        }
         break;
       case 38: /* up */
-        entity.velocity.x = 0;
-        entity.velocity.y = -30;
+        if (!directions[1]) {
+          directions[1] = true;
+          entity.velocity.y += -50;
+        }
         break;
       case 39: /* right */
-        entity.velocity.x = 30;
-        entity.velocity.y = 0;
+        if (!directions[2]) {
+          directions[2] = true;
+          entity.velocity.x += 50;
+        }
         break;
       case 40: /* down */
-        entity.velocity.x = 0;
-        entity.velocity.y = 30;
+        if (!directions[3]) {
+          directions[3] = true;
+          entity.velocity.y += 50;
+        }
         break;
     }
     
@@ -62,9 +72,23 @@ class KeyboardController extends Controller implements KeyListener {
   }
   
   public void keyReleased(int keyCode) {
-    if((keyCode == 37) || (keyCode == 38) || (keyCode == 39) || (keyCode == 40)){
-      entity.velocity.x = 0;
-      entity.velocity.y = 0;
+    switch (keyCode) {
+      case 37: /* left */
+        directions[0] = false;
+        entity.velocity.x -= -50;
+        break;
+      case 38: /* up */
+        directions[1] = false;
+        entity.velocity.y -= -50;
+        break;
+      case 39: /* right */
+        directions[2] = false;
+        entity.velocity.x -= 50;
+        break;
+      case 40: /* down */
+        directions[3] = false;
+        entity.velocity.y -= 50;
+        break;
     }
   }
 }
