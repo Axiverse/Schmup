@@ -64,6 +64,8 @@ class Ship extends Entity {
   CollisionListener collisionListener;
   
   public void onCollision(CollisionEvent event) {
+    sound2.play();
+    
     if (collisionListener != null) {
       collisionListener.onCollision(event);
     }

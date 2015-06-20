@@ -1,4 +1,3 @@
-
 class FrameEvent {
   PGraphics g;
   float delta;
