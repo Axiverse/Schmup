@@ -1,4 +1,5 @@
-Entity e = new Entity();
+
+Game game = new Game();
 
 
 public void setup() {
@@ -6,20 +7,29 @@ public void setup() {
   randomSeed(5);
   smooth();
 
-  e.position.x = 50;
-  e.position.y = 50;
+  {
+    Emitter s = new Emitter();
+    game.entities.add(s);
+  }
   
-  //e.acceleration.x = 10;
-  e.alive = true;
+  {
+    Ship s = new Ship();
+    s.alive = true;
+    s.friendly = true;
+    s.position.x = 100;
+    s.position.y = 50;
+    s.controllers.add(new KeyboardController(s));
+    game.entities.add(s);
+    game.friendlyShips.add(s);
+  }
   
-  new KeyboardController(e);
 }
 
 public void draw() {
   background(255);
   
-  e.draw();
-  e.update(1/60f);
+  game.update();
+  game.draw();
 
 }
 

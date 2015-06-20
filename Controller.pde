@@ -4,9 +4,35 @@ class Controller {
   public Controller(Entity entity) {
     this.entity = entity; 
   }
+  
+  public void update(float delta) {
+    
+  }
+}
+
+class CircleController extends Controller {
+  PVector center = new PVector(40, 40);
+  float radius = 20;
+  float angularVelocity = 3;
+  float theta = 0;
+  
+  public CircleController(Entity entity) {
+    super(entity);
+  }
+
+  public void update(float delta) {
+    theta += angularVelocity * delta;
+    
+    entity.position.x = center.x + radius * cos(theta);
+    entity.position.y = center.y + radius * sin(theta);
+    
+    entity.weapon.emit(entity, delta);
+  }
 }
 
 class KeyboardController extends Controller implements KeyListener {
+  boolean directions[] = new boolean[4];//L,U,R,D
+  
   public KeyboardController(Entity entity) {
       super(entity);
       keyListeners.add(this);
@@ -15,27 +41,55 @@ class KeyboardController extends Controller implements KeyListener {
   public void keyPressed(int keyCode) {
     switch (keyCode) {
       case 37: /* left */
-        entity.velocity.x = -10;
-        entity.velocity.y = 0;
+        if (!directions[0]) {
+          directions[0] = true;
+          entity.velocity.x += -50;
+        }
         break;
       case 38: /* up */
-        entity.velocity.x = 0;
-        entity.velocity.y = -10;
+        if (!directions[1]) {
+          directions[1] = true;
+          entity.velocity.y += -50;
+        }
         break;
       case 39: /* right */
-        entity.velocity.x = 10;
-        entity.velocity.y = 0;
+        if (!directions[2]) {
+          directions[2] = true;
+          entity.velocity.x += 50;
+        }
         break;
       case 40: /* down */
-        entity.velocity.x = 0;
-        entity.velocity.y = 10;
+        if (!directions[3]) {
+          directions[3] = true;
+          entity.velocity.y += 50;
+        }
         break;
+    }
+    
+    if (key == ' ') {
+      entity.weapon.emit(entity,100);
     }
   }
   
   public void keyReleased(int keyCode) {
-    entity.velocity.x = 0;
-    entity.velocity.y = 0;
+    switch (keyCode) {
+      case 37: /* left */
+        directions[0] = false;
+        entity.velocity.x -= -50;
+        break;
+      case 38: /* up */
+        directions[1] = false;
+        entity.velocity.y -= -50;
+        break;
+      case 39: /* right */
+        directions[2] = false;
+        entity.velocity.x -= 50;
+        break;
+      case 40: /* down */
+        directions[3] = false;
+        entity.velocity.y -= 50;
+        break;
+    }
   }
 }
 
