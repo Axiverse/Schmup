@@ -1,4 +1,4 @@
-class Game
+class Game implements KeyListener
 {
   ArrayList<Entity> entities;
   
@@ -12,8 +12,11 @@ class Game
   ArrayList<Entity> enemyShips = new ArrayList<Entity>();
   ArrayList<Entity> enemyProjectiles = new ArrayList<Entity>();
   
+  boolean running = true;
+  
   public Game() {
     entities = new ArrayList<Entity>();
+    keyListeners.add(this);
   }
   
   PVector temp = new PVector();
@@ -90,6 +93,9 @@ class Game
   }
   
   public void update() {
+    if (!running)
+      return;
+      
     processCollisions();
     
     for (Entity entity : entities) {
@@ -120,4 +126,14 @@ class Game
     player.drawUi();
   }
   
+  
+  public void keyPressed(int keyCode) {
+    if (key == 'p') {
+      running = !running;
+    }
+  }
+  
+  public void keyReleased(int keyCode) {
+    
+  }
 }

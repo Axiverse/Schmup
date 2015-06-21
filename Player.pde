@@ -1,9 +1,17 @@
-class Player implements CollisionListener {
-  int lives = 3;
+class Player implements CollisionListener, KeyListener {
   PVector respawnPoint = new PVector();
+  ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+  
   Ship ship;
   
+  int lives = 3;
+  
+  int score = 0;
+  int multiplier = 1;
+  
   public Player() {
+    keyListeners.add(this);
+    
     respawnPoint.x = 400;
     respawnPoint.y = 700;
     
@@ -15,7 +23,10 @@ class Player implements CollisionListener {
     game.entities.add(ship);
     game.friendlyShips.add(ship);
     
-    ship.weapon = new Trident();
+    weapons.add(ship.weapon);
+    weapons.add(new Trident());
+    weapons.add(new Rapid());
+
     ship.weapon.period = 0.25;
     
     ship.collisionListener = this;
@@ -25,6 +36,8 @@ class Player implements CollisionListener {
     event.preventDefault();
     ship.position.set(respawnPoint);
     lives--;
+    
+    multiplier = 1;
   }
   
   PFont font = createFont("Eurostile", 16);
@@ -45,9 +58,27 @@ class Player implements CollisionListener {
     
     textAlign(RIGHT, TOP);
     text("Score", width - 10, 10);
-    text("393993", width - 10, 30);
+    text(score, width - 10, 30);
     
     text("Freme Rate", width - 10, 70);
     text(frameRate, width - 10, 90);
+    
+    text("Entities", width - 10, 130);
+    text(game.entities.size(), width - 10, 150);
+  }
+  
+  public void keyPressed(int keyCode) {
+    if (key >= '1' && key <= '9') {
+      int index = key - '1';
+      
+      print(index);
+      if (weapons.size() > index) {
+        ship.weapon = weapons.get(index);
+      }
+    }
+  }
+  
+  public void keyReleased(int keyCode) {
+    
   }
 }

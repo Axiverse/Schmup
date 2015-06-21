@@ -4,11 +4,14 @@ SoundFile sound;
 SoundFile sound2;
 SoundFile sound3;
 
-Game game = new Game();
-Stage stage = new Stage();
+Game game;
+Stage stage;
 Player player;
 
 public void setup() {
+  game = new Game();
+  stage = new Stage();
+  
   size(800,800,P3D);
   randomSeed(5);
   smooth();

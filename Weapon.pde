@@ -38,6 +38,10 @@ class Weapon {
 }
 
 class Trident extends Weapon {
+  public Trident() {
+    period = 0.5;
+  }
+  
   public Projectile emit(Entity e, float delta) {
     if ((cooldown -= delta) < 0) {
       cooldown = period;
@@ -74,17 +78,22 @@ class Trident extends Weapon {
 }
 
 class Rapid extends Weapon {
-  int rushCount = 20;
+  int rushCount = 10;
   int maxRush = rushCount;
+  int rechargePeriod = 1;
   
   Rapid(){
-    period = .1;
+    period = .10;
   }
   
   public Projectile emit(Entity e, float delta) {
     if ((cooldown -= delta) < 0) {
       cooldown = period;
       rushCount --;
+      
+      if (cooldown < (-rechargePeriod + period)) {
+        rushCount = maxRush;
+      }
       
       if(rushCount > 0){
         Projectile projectile = new Projectile();
@@ -111,7 +120,7 @@ class Rapid extends Weapon {
       
       if(rushCount <= 0){
         rushCount = maxRush;
-        cooldown = 3;
+        cooldown = rechargePeriod;
       }
     }
     

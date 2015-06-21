@@ -52,7 +52,8 @@ class Entity
   }
   
   public void onCollision(CollisionEvent event) {
-    
+    player.score += 99 * player.multiplier;
+    player.multiplier++;
   }
 }
 

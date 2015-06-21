@@ -77,8 +77,8 @@ class Starfield extends Ornament {
   public Starfield() {
     position.z = 1;
     
-    for (int i = 0; i < 100; ++i) {
-      stars.add(new PVector(random(150, 650), random(0, 800), 0));
+    for (int i = 0; i < 200; ++i) {
+      stars.add(new PVector(random(150, 650), random(-800, 800), 0));
     }
   }
   
