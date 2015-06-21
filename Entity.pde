@@ -7,7 +7,7 @@ class Entity
   
   boolean alive = false;
   boolean friendly = false;
-  float radius = 5;
+  float radius = 8;
   
   ArrayList<Controller> controllers = new ArrayList<Controller>();
   Weapon weapon = new Weapon();
@@ -20,9 +20,9 @@ class Entity
     ellipseMode(CENTER);
     
     if (friendly)
-      fill(0, 0, 255);
+      fill(0, 255, 255);
     else
-      fill(255, 0, 0);
+      fill(255, 255, 0);
     
     ellipse(position.x, position.y, radius * 2, radius * 2);
   }
@@ -88,7 +88,7 @@ class Emitter extends Entity {
       
       i++; 
       Ship s = new Ship();
-      s.position.x = 200 + 10 * i;
+      s.position.x = 200 + 20 * i;
       s.position.y = 50;
       CircleController c = new CircleController(s);
       c.center.set(s.position);

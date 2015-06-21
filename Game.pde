@@ -93,7 +93,7 @@ class Game
     processCollisions();
     
     for (Entity entity : entities) {
-      entity.update(1/60f);
+      entity.update(1/frameRate);
     }
     
     for (Entity entity : pendingAdd) {
@@ -106,7 +106,7 @@ class Game
     }
     pendingRemove.clear();
     
-    stage.update(1/60f);
+    stage.update(1/frameRate);
   }
   
   public void draw() {
@@ -117,29 +117,7 @@ class Game
       entity.draw();
     }
     
-    drawUi();
-  }
-  
-  
-  PFont font = createFont("Eurostile", 16);
-  public void drawUi() {
-    fill(0);
-    noStroke();
-    
-    rect(0, 0, 150, 800);
-    
-    rect(650, 0, 150, 800);
-    
-    fill(255);
-    textFont(font);
-    textAlign(LEFT, TOP);
-    text("Lives", 10, 10);
-    text("3", 10, 30);
-    
-    
-    textAlign(RIGHT, TOP);
-    text("Score", width - 10, 10);
-    text("393993", width - 10, 30);
+    player.drawUi();
   }
   
 }

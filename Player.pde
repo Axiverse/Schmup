@@ -15,8 +15,8 @@ class Player implements CollisionListener {
     game.entities.add(ship);
     game.friendlyShips.add(ship);
     
-    ship.weapon = new Rapid();
-    //ship.weapon.period = 0.25;
+    ship.weapon = new Trident();
+    ship.weapon.period = 0.25;
     
     ship.collisionListener = this;
   }
@@ -24,6 +24,30 @@ class Player implements CollisionListener {
   public void onCollision(CollisionEvent event) {
     event.preventDefault();
     ship.position.set(respawnPoint);
+    lives--;
   }
   
+  PFont font = createFont("Eurostile", 16);
+  public void drawUi() {
+    fill(0);
+    noStroke();
+    
+    rect(0, 0, 150, 800);
+    
+    rect(650, 0, 150, 800);
+    
+    fill(255);
+    textFont(font);
+    textAlign(LEFT, TOP);
+    text("Lives", 10, 10);
+    text(lives, 10, 30);
+    
+    
+    textAlign(RIGHT, TOP);
+    text("Score", width - 10, 10);
+    text("393993", width - 10, 30);
+    
+    text("Freme Rate", width - 10, 70);
+    text(frameRate, width - 10, 90);
+  }
 }

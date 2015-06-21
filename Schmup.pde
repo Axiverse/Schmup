@@ -9,7 +9,7 @@ Stage stage = new Stage();
 Player player;
 
 public void setup() {
-  size(800,800);
+  size(800,800,P3D);
   randomSeed(5);
   smooth();
   
@@ -33,6 +33,9 @@ public void setup() {
   
   stage.ornaments.add(new Starfield());
   stage.ornaments.add(new Planet());
+  stage.ornaments.add(new Moon());
+  stage.ornaments.add(new Title());
+  
 }
 
 public void draw() {

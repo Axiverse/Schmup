@@ -46,7 +46,8 @@ class Trident extends Weapon {
         Projectile projectile = new Projectile();
         projectile.position.set(e.position);
         projectile.velocity.set(e.velocity);
-        projectile.velocity.y += (e.friendly) ? -100 : 100;
+        projectile.velocity.mult(0.5f);
+        projectile.velocity.y += (e.friendly) ? -200 : 200;
         projectile.velocity.x += i * 80;
         projectile.alive = true;
         projectile.radius = 3;
