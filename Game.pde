@@ -105,10 +105,13 @@ class Game
       entities.remove(entity);
     }
     pendingRemove.clear();
+    
+    stage.update(1/60f);
   }
   
   public void draw() {
     background(20);
+    stage.draw();
     
     for (Entity entity : entities) {
       entity.draw();
@@ -140,4 +143,3 @@ class Game
   }
   
 }
-

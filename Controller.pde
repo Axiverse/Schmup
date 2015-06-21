@@ -30,6 +30,36 @@ class CircleController extends Controller {
   }
 }
 
+class DownController extends Controller {
+  float speed = 30;
+  
+  public DownController(Entity entity){
+    super(entity);
+  }
+  
+  public void update(float delta) {
+    entity.position.y += speed * delta;
+    entity.weapon.emit(entity, delta);
+  }
+}
+
+class StrafeController extends Controller {
+  float theta = 0;
+  float angularVelocity = 5;
+  float radius = 30;
+  float xCenter;
+  
+  StrafeController(Entity entity){
+    super(entity);
+    xCenter = entity.position.x;
+  }
+  
+  public void update(float delta){
+    theta += angularVelocity * delta;
+    entity.position.x = xCenter + radius * cos(theta);
+  }
+}
+
 class KeyboardController extends Controller implements KeyListener {
   boolean directions[] = new boolean[4];//L,U,R,D
   boolean fire = false;
@@ -108,4 +138,3 @@ class KeyboardController extends Controller implements KeyListener {
     }
   }
 }
-

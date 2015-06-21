@@ -15,7 +15,8 @@ class Player implements CollisionListener {
     game.entities.add(ship);
     game.friendlyShips.add(ship);
     
-    ship.weapon.period = 0.25;
+    ship.weapon = new Rapid();
+    //ship.weapon.period = 0.25;
     
     ship.collisionListener = this;
   }

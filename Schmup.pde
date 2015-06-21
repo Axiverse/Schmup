@@ -5,6 +5,7 @@ SoundFile sound2;
 SoundFile sound3;
 
 Game game = new Game();
+Stage stage = new Stage();
 Player player;
 
 public void setup() {
@@ -18,11 +19,20 @@ public void setup() {
   sound3 = new SoundFile(this, "18-fingers_in_the_noise-elixir.mp3");
   sound3.play();          
   
-  Emitter s = new Emitter();
-  game.entities.add(s);
+  Emitter e = new Emitter();
+  game.entities.add(e);
+    
+  Ship s = new Ship();
+  s.position = new PVector(400, 100);
+  s.controllers.add(new DownController(s));
+  s.controllers.add(new StrafeController(s));
+  game.pendingAdd.add(s);
+  game.enemyShips.add(s);
   
   player = new Player();
   
+  stage.ornaments.add(new Starfield());
+  stage.ornaments.add(new Planet());
 }
 
 public void draw() {
